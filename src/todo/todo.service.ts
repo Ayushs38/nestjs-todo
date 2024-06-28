@@ -3,7 +3,7 @@ import { TodoDto } from './todo.dto';
 
 @Injectable()
 export class TodoService {
-    private todos: TodoDto[] = [];
+    private readonly  todos: TodoDto[] = [];
     private idCounter = 1;
 
     create(todoDto: TodoDto):TodoDto{
@@ -19,7 +19,10 @@ export class TodoService {
 
     findOne(id:number): TodoDto{
         const todo = this.todos.find(todo => todo.id === id);
+        // 
+
         if (!todo) {
+            console.log(todo);
           throw new NotFoundException(`Todo with ID ${id} not found`);
         }
         return todo;

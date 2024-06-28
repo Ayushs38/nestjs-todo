@@ -5,35 +5,40 @@ import { Controller, Get, Post, Body,Param, Patch, Delete } from '@nestjs/common
 
 @Controller('todo')
 export class TodoController {
-    constructor(private readonly TodoService: TodoService){}
+    constructor(private  TodoService: TodoService){}
 
     @Post()
-    create(@Body() TodoDto: TodoDto){
+    async create(@Body() TodoDto: TodoDto){
         return this.TodoService.create(TodoDto);
     }
 
     @Get()
-    findAll(){
+    async findAll(){
         return this.TodoService.findAll();
     }
 
     @Get(':id')
-    findOne(@Param('id') id:number){
+    async  findOne(@Param('id') id:number){
         return this.TodoService.findOne(id);
     }
+    // @Get(':id')
+    // findOne(@Param() params: number){
+    //     console.log(params.);
+        
+    // }
 
     @Patch(':id')
-    update(@Param('id') id:number, @Body() updateDto: TodoDto){
+    async update(@Param('id') id:number, @Body() updateDto: TodoDto){
         return this.TodoService.update(id, updateDto);
     }
 
     @Patch(':id/complete')
-    markAsCompleted(@Param('id') id: number) {
+    async markAsCompleted(@Param('id') id: number) {
     return this.TodoService.markAsCompleted(id)
     }
 
     @Delete(':id')
-    remove(@Param('id') id: number) {
+    async remove(@Param('id') id: number) {
         return this.TodoService.remove(id);
     }
 }
