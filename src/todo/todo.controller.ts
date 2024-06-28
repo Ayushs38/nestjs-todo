@@ -1,6 +1,6 @@
 import { TodoDto } from './todo.dto';
 import { TodoService } from './todo.service';
-import { Controller, Get, Post, Body,Param, Patch, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body,Param, Patch, Delete, Put } from '@nestjs/common';
 
 
 @Controller('todo')
@@ -21,11 +21,6 @@ export class TodoController {
     async  findOne(@Param('id') id:number){
         return this.TodoService.findOne(id);
     }
-    // @Get(':id')
-    // findOne(@Param() params: number){
-    //     console.log(params.);
-        
-    // }
 
     @Patch(':id')
     async update(@Param('id') id:number, @Body() updateDto: TodoDto){

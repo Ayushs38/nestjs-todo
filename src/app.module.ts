@@ -1,9 +1,23 @@
 import { Module } from '@nestjs/common';
-// import { AppController } from './app.controller';
-// import { AppService } from './app.service';
+import { DataSource } from 'typeorm';
 import { TodoModule } from './todo/todo.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Todo } from './entities/todo.entity';
 
 @Module({
-  imports: [TodoModule],
+  imports: [TodoModule,
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5434 ,
+      username: 'postgres',
+      password: 'admin',
+      database: 'test',
+      entities: [Todo],
+      synchronize: true,
+    }),
+  ],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private dataSource: DataSource) {}
+}
