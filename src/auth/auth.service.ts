@@ -10,6 +10,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { JwtPayload } from 'jsonwebtoken';
 import { Op } from 'sequelize';
 
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -32,12 +33,16 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(pass, 10);
 
     try {
-      await this.userModel.create({
+      const user  = await this.userModel.create({
         username,
         email,
         password: hashedPassword,
       });
-      return { message: 'User created successfully' };
+
+      const payload: JwtPayload = { username: user.username, sub: user.id };
+      const accessToken = await this.jwtService.signAsync(payload);
+
+      return { message: 'User created successfully', accessToken };
     } catch (error) {
       throw new BadRequestException('Failed to create a user');
     }
@@ -58,4 +63,6 @@ export class AuthService {
       accessToken: await this.jwtService.signAsync(payload),
     };
   }
+
+ 
 }
