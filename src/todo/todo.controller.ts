@@ -1,11 +1,14 @@
+import { AuthGuard } from 'src/auth/auth.guard';
 import { TodoDto } from './todo.dto';
 import { TodoService } from './todo.service';
-import { Controller, Get, Post, Body,Param, Patch, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body,Param, Patch, Delete, Put, UseGuards } from '@nestjs/common';
 
 
 @Controller('todo')
+// @UseGuards(AuthGuard)
 export class TodoController {
     constructor(private  TodoService: TodoService){}
+
 
     @Post()
     async create(@Body() TodoDto: TodoDto){

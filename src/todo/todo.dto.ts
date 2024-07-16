@@ -13,6 +13,6 @@ export class TodoDto {
   @IsBoolean()
   readonly isCompleted?: boolean;
 
-  @IsInt()
-  readonly userId: number;
+  
+  // readonly userId?: number;
 }
