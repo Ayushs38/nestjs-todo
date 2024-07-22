@@ -6,6 +6,7 @@ import { UserController } from './user/user.controller';
 import { UserModule } from './user/user.module';
 
 
+
 @Module({
   imports: [
     sequelizeModule,
@@ -14,6 +15,6 @@ import { UserModule } from './user/user.module';
     UserModule,
 
   ],
-  controllers: [UserController],
+  
 })
 export class AppModule {}

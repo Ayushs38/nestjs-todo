@@ -18,12 +18,12 @@ export class Todo extends Model<Todo> {
   })
   isCompleted: boolean;
 
-  // @ForeignKey(() => User)
-  // @Column({
-  //   allowNull: false, // Changed from false to true
-  // })
-  // userId: number ;
+  @ForeignKey(() => User)
+  @Column({
+    allowNull: true, 
+  })
+  userId: number;
 
-  // @BelongsTo(() => User)
-  // user: User;
+  @BelongsTo(() => User)
+  user: User;
 }

@@ -1,15 +1,10 @@
 import * as bcrypt from 'bcrypt';
-import {
-  BadRequestException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { User } from 'src/models/user.model';
 import { InjectModel } from '@nestjs/sequelize';
-import { JwtPayload } from 'jsonwebtoken';
 import { Op } from 'sequelize';
-
+import { User } from 'src/models/user.model';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {
@@ -17,9 +12,14 @@ export class AuthService {
     @InjectModel(User)
     private userModel: typeof User,
     private jwtService: JwtService,
+    private userService: UserService,
   ) {}
 
-  async signUp(username: string, email: string, pass: string): Promise<any> {
+  async signUp(
+    username: string,
+    email: string,
+    pass: string,
+  ): Promise<{ message: string; accessToken: string }> {
     const existingUser = await this.userModel.findOne({
       where: {
         [Op.or]: [{ username }, { email }],
@@ -33,36 +33,49 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(pass, 10);
 
     try {
-      const user  = await this.userModel.create({
+      const user = await this.userModel.create({
         username,
         email,
         password: hashedPassword,
       });
 
-      const payload: JwtPayload = { username: user.username, sub: user.id };
+      const payload = { username: user.username, sub: user.id };
       const accessToken = await this.jwtService.signAsync(payload);
 
-      return { message: 'User created successfully', accessToken };
+      return { message: 'User created successfully and logged in', accessToken };
     } catch (error) {
+      console.error('Error during user creation:', error);
       throw new BadRequestException('Failed to create a user');
     }
   }
 
-  async signIn(email: string, pass: string): Promise<{ accessToken: string }> {
+  async login(email: string, pass: string): Promise<{ accessToken: string }> {
     const user = await this.userModel.findOne({ where: { email } });
+    // console.log("user:", user)
     if (!user) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw new BadRequestException('Invalid email');
     }
+
     const isMatch = await bcrypt.compare(pass, user.password);
 
     if (!isMatch) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw new BadRequestException('Invalid password');
     }
-    const payload: JwtPayload = { username: user.username, sub: user.id };
-    return {
-      accessToken: await this.jwtService.signAsync(payload),
-    };
+
+    const payload = { email: user.email, sub: user.id };
+    const accessToken = await this.jwtService.signAsync(payload);
+
+    return { accessToken };
   }
 
- 
+  async validateUser(username: string,email: string,  pass: string): Promise<any> {
+    const user = await this.userService.findOneUser(username, email);
+    // console.log("User while validating:", user)
+    if (user && await bcrypt.compare(pass, user.password)) {
+      const { password, ...result } = user.toJSON();
+      // console.log("result:", result);
+      return result;
+    }
+    return null;
+  }
 }

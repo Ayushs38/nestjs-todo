@@ -1,31 +1,28 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
+import { Controller, Request, Post, UseGuards, Body, Req, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { LocalAuthGuard } from 'src/guards/local-auth.guard';
 import { AuthDto } from './auth.dto';
-import { AuthGuard } from './auth.guard';
-import { Request as Req } from 'express';
-
-
+import { SignInDto } from './signin.dto';
+import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private AuthService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
   @Post('signup')
-  
-  async signUp(@Body() AuthDto: AuthDto): Promise<void> {
-    return this.AuthService.signUp(AuthDto.username, AuthDto.email,AuthDto.password);
+  async signUp(@Body() AuthDto: AuthDto) {
+    
+    return this.authService.signUp(AuthDto.username, AuthDto.email, AuthDto.password);
   }
 
-  @HttpCode(HttpStatus.OK)
   @Post('signin')
-  async signIn(@Body() AuthDto: AuthDto): Promise<{ accessToken: string }> {
-    return this.AuthService.signIn(AuthDto.email, AuthDto.password);
+  async signIn(@Body() AuthDto: AuthDto) {
+    return this.authService.login(AuthDto.email, AuthDto.password);
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get('profile')
-  getProfile(@Request() req){
-    console.log("request: ",req.user);
+  async getProfile(@Req() req){
     return req.user;
   }
 }
