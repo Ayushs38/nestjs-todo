@@ -1,5 +1,4 @@
 import {
-  BeforeCreate,
   Column,
   DataType,
   HasMany,
@@ -7,7 +6,6 @@ import {
   Table,
 } from 'sequelize-typescript';
 import { Todo } from './todo.model';
-
 
 @Table
 export class User extends Model<User> {
@@ -36,7 +34,55 @@ export class User extends Model<User> {
   })
   password: string;
 
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  refreshToken: string;
 
-  @HasMany(()=> Todo)
+  @Column({
+    type: DataType.DATE,
+    allowNull: true,
+  })
+  refreshTokenExp: Date;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  profilePicUrl: string;
+
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  firstName: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  lastName: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  bio: string;
+
+  @Column({
+    type: DataType.DATE,
+    allowNull: true,
+  })
+  dateOfBirth: Date;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  phoneNumber: string;
+
+  @HasMany(() => Todo)
   todos: Todo[];
 }

@@ -3,7 +3,6 @@ import { TodoDto } from './todo.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { Todo } from 'src/models/todo.model';
 import { User } from 'src/models/user.model';
-import { error } from 'console';
 
 @Injectable()
 export class TodoService {

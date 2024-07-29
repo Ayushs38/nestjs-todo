@@ -6,7 +6,7 @@ export const sequelizeModule = SequelizeModule.forRoot({
     port: 5434,
     username: 'postgres',
     password: 'admin',
-    database: 'todo_app',
+    database: 'nest_todo_app',
     autoLoadModels: true,
     synchronize: true,
 })

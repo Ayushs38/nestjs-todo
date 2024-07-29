@@ -14,9 +14,8 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     if (!user) {
       throw new UnauthorizedException("error validating user");
     }
-    console.log("User local strategy:", user);
+    // console.log("User local strategy:", user);
     return {
-      message: "user validated",
       user: user
     };
   }
