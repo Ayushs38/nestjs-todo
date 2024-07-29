@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 import { Controller, Post, UseGuards, Body, Req, Get, Res, HttpStatus } from '@nestjs/common';
+=======
+import { Controller, Request, Post, UseGuards, Body, Req, Get } from '@nestjs/common';
+>>>>>>> parent of 491cbc4 (signin dto deleted)
 import { AuthService } from './auth.service';
+import { LocalAuthGuard } from 'src/guards/local-auth.guard';
 import { AuthDto } from './auth.dto';
-
+import { SignInDto } from './signin.dto';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { Response, response } from 'express';
 
