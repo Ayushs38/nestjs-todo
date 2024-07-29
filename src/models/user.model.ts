@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import {
   Column,
   DataType,
@@ -8,6 +9,9 @@ import {
   Table,
 } from 'sequelize-typescript';
 import { Todo } from './todo.model';
+=======
+import { Column, DataType, Model, Table } from "sequelize-typescript";
+>>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
 =======
 import { Column, DataType, Model, Table } from "sequelize-typescript";
 >>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
@@ -30,6 +34,7 @@ export class User extends Model<User>{
     })
     email: string;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   @Column({
@@ -98,12 +103,17 @@ export class User extends Model<User>{
 =======
 =======
 >>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
+=======
+>>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
     @Column({
         type:DataType.STRING,
         allowNull: false,
     })
     password: string;
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
+=======
 >>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
 =======
 >>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)

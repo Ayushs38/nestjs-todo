@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import {
   Body,
   Controller,
@@ -53,6 +54,12 @@ export class UserController {
   
 
 }
+=======
+import { Controller } from '@nestjs/common';
+
+@Controller('user')
+export class UserController {}
+>>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
 =======
 import { Controller } from '@nestjs/common';
 

@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { Controller, Post, UseGuards, Body, Req, Get, Res, HttpStatus } from '@nestjs/common';
 =======
 import { Controller, Request, Post, UseGuards, Body, Req, Get } from '@nestjs/common';
@@ -20,11 +21,19 @@ import { Body, Controller, Get, HttpCode, HttpStatus, Post, Request, UseGuards }
 import { AuthService } from './auth.service';
 import { AuthDto } from './auth.dto';
 >>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
+=======
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
+import { AuthService } from './auth.service';
+import { AuthDto } from './auth.dto';
+>>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
 import { AuthGuard } from './auth.guard';
 import { Request as Req } from 'express';
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
+=======
 >>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
 =======
 >>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
@@ -34,6 +43,7 @@ export class AuthController {
   constructor(private AuthService: AuthService) {}
 
   @Post('signup')
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   async signUp(
@@ -52,10 +62,16 @@ export class AuthController {
   async signUp(@Body() AuthDto: AuthDto): Promise<void> {
     return this.AuthService.signUp(AuthDto.username, AuthDto.email,AuthDto.password);
 >>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
+=======
+  
+  async signUp(@Body() AuthDto: AuthDto): Promise<void> {
+    return this.AuthService.signUp(AuthDto.username, AuthDto.email,AuthDto.password);
+>>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
   }
 
   @HttpCode(HttpStatus.OK)
   @Post('signin')
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   async signIn(
@@ -83,6 +99,12 @@ export class AuthController {
 >>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
   }
 
+=======
+  async signIn(@Body() AuthDto: AuthDto): Promise<{ accessToken: string }> {
+    return this.AuthService.signIn(AuthDto.email, AuthDto.password);
+  }
+
+>>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
 =======
   async signIn(@Body() AuthDto: AuthDto): Promise<{ accessToken: string }> {
     return this.AuthService.signIn(AuthDto.email, AuthDto.password);

@@ -2,15 +2,8 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { TodoDto } from './todo.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { Todo } from 'src/models/todo.model';
-<<<<<<< HEAD
-<<<<<<< HEAD
 import { User } from 'src/models/user.model';
-=======
-
->>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
-=======
-
->>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
+import { error } from 'console';
 
 @Injectable()
 export class TodoService {
