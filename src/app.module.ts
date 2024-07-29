@@ -3,8 +3,12 @@ import { TodoModule } from './todo/todo.module';
 import { AuthModule } from './auth/auth.module';
 import { sequelizeModule } from './lib/sequelize';
 import { UserModule } from './user/user.module';
+<<<<<<< HEAD
 import { ConfigModule } from '@nestjs/config';
 import * as cookieParser from 'cookie-parser'
+=======
+
+>>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
 
 @Module({
   imports: [

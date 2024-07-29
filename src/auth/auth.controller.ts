@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { Controller, Post, UseGuards, Body, Req, Get, Res, HttpStatus } from '@nestjs/common';
 =======
 import { Controller, Request, Post, UseGuards, Body, Req, Get } from '@nestjs/common';
@@ -14,10 +15,18 @@ import { SignInDto } from './signin.dto';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { Response, response } from 'express';
 =======
+=======
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
+import { AuthService } from './auth.service';
+import { AuthDto } from './auth.dto';
+>>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
 import { AuthGuard } from './auth.guard';
 import { Request as Req } from 'express';
 
 
+<<<<<<< HEAD
+>>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
+=======
 >>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
 
 @Controller('auth')
@@ -25,6 +34,7 @@ export class AuthController {
   constructor(private AuthService: AuthService) {}
 
   @Post('signup')
+<<<<<<< HEAD
 <<<<<<< HEAD
   async signUp(
     @Body() AuthDto: AuthDto,
@@ -37,10 +47,16 @@ export class AuthController {
   async signUp(@Body() AuthDto: AuthDto): Promise<void> {
     return this.AuthService.signUp(AuthDto.username, AuthDto.email,AuthDto.password);
 >>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
+=======
+  
+  async signUp(@Body() AuthDto: AuthDto): Promise<void> {
+    return this.AuthService.signUp(AuthDto.username, AuthDto.email,AuthDto.password);
+>>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
   }
 
   @HttpCode(HttpStatus.OK)
   @Post('signin')
+<<<<<<< HEAD
 <<<<<<< HEAD
   async signIn(
     @Body() AuthDto: AuthDto,
@@ -67,6 +83,12 @@ export class AuthController {
 >>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
   }
 
+=======
+  async signIn(@Body() AuthDto: AuthDto): Promise<{ accessToken: string }> {
+    return this.AuthService.signIn(AuthDto.email, AuthDto.password);
+  }
+
+>>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
   @UseGuards(AuthGuard)
   @Get('profile')
   getProfile(@Request() req){
