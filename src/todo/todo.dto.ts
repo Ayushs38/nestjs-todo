@@ -14,5 +14,5 @@ export class TodoDto {
   readonly isCompleted?: boolean;
 
   
-//   readonly userId?: number;
+  // readonly userId?: number;
 }

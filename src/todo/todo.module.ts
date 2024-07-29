@@ -3,13 +3,12 @@ import { TodoController } from './todo.controller';
 import { TodoService } from './todo.service';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Todo } from 'src/models/todo.model';
-import { User } from 'src/models/user.model';
 
 
 @Module({
-  imports: [SequelizeModule.forFeature([Todo, User])],
+  imports: [SequelizeModule.forFeature([Todo])],
   controllers: [TodoController],
   providers: [TodoService],
-  exports:[TodoService]
+  // exports: [TypeOrmModule]
 })
 export class TodoModule {}

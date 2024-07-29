@@ -2,67 +2,64 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { TodoDto } from './todo.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { Todo } from 'src/models/todo.model';
+<<<<<<< HEAD
 import { User } from 'src/models/user.model';
+=======
+
+>>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
 
 @Injectable()
 export class TodoService {
   constructor(
     @InjectModel(Todo)
     private todoModal: typeof Todo,
-    @InjectModel(User)
-    private userModal: typeof User,
   ) {}
 
-  async createTodo(userId: number, todoDto: TodoDto): Promise<Todo> {
-    // console.log("User id is: ",userId);
-    const user = await this.userModal.findByPk(userId);
-
-    if (!user) throw new NotFoundException('User not found');
-
-    return this.todoModal.create({ ...todoDto, userId });
-  }
-
-  async getTodosByUserId(userId: number): Promise<Todo[]> {
-    return this.todoModal.findAll({
-      where: { userId },
+  async create(todoDto: TodoDto): Promise<Todo> {
+    const todo = this.todoModal.create({
+      ...todoDto,
+      isCompleted: false,
     });
-  }
-
-  async findOneTodo(userId: number, id: number): Promise<Todo> {
-    const todo =
-      (await this.todoModal.findOne({ where: { id, userId } })) ||
-      (() => {
-        throw new NotFoundException(`Todo with ID ${id} not found`);
-      })();
     return todo;
   }
 
-  async updateTodo(
-    userId: number,
-    id: number,
-    updateDto: TodoDto,
-  ): Promise<Todo> {
-    const todo = await this.findOneTodo(userId, id);
+
+  findAll(): Promise<Todo[]> {
+    return this.todoModal.findAll();
+  }
+
+
+  async findOne(id: number): Promise<Todo> {
+    const todo = await this.todoModal.findOne({where: { id} }) || (() => { throw new NotFoundException(`Todo with ID ${id} not found`); })();
+    return todo;
+  }
+
+  async update(id: number, updateDto: TodoDto): Promise<Todo> {
+    const todo = await this.todoModal.findOne({where: { id} });
     if (!todo) {
       throw new NotFoundException(`Todo with ID ${id} not found`);
     }
     Object.assign(todo, updateDto);
     await todo.save();
-    return todo;
+    return todo
   }
 
-  async markAsCompleted(userId: number, id: number): Promise<Todo> {
-    const todo = await this.findOneTodo(userId, id);
+
+  async markAsCompleted(id: number): Promise<Todo> {
+    const todo = await this.todoModal.findOne({where: { id} });
     if (!todo) {
       throw new NotFoundException(`Todo with ID ${id} not found`);
     }
-    todo.isCompleted = !todo.isCompleted;
+    todo.isCompleted = !(todo.isCompleted) ;
     await todo.save();
     return todo;
   }
 
-  async removeTodo(userId: number, id: number): Promise<void> {
-    const todo = await this.findOneTodo(userId, id);
-    await todo.destroy();
+
+  async remove(id: number): Promise<void> {
+    const result = await this.todoModal.destroy({where: {id}});
+    if (result === 0) {
+      throw new NotFoundException(`Todo with ID ${id} not found`);
+    }
   }
 }

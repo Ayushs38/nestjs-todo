@@ -5,11 +5,16 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { InjectModel } from '@nestjs/sequelize';
-import { Op } from 'sequelize';
 import { User } from 'src/models/user.model';
+<<<<<<< HEAD
 import { UserService } from '../user/user.service';
 import { response } from 'express';
+=======
+import { InjectModel } from '@nestjs/sequelize';
+import { JwtPayload } from 'jsonwebtoken';
+import { Op } from 'sequelize';
+
+>>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
 
 @Injectable()
 export class AuthService {
@@ -17,14 +22,17 @@ export class AuthService {
     @InjectModel(User)
     private userModel: typeof User,
     private jwtService: JwtService,
-    private userService: UserService,
   ) {}
 
+<<<<<<< HEAD
   async signUp(
     username: string,
     email: string,
     pass: string,
   ): Promise<{ message: string; accessToken: string; user: User }> {
+=======
+  async signUp(username: string, email: string, pass: string): Promise<any> {
+>>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
     const existingUser = await this.userModel.findOne({
       where: {
         [Op.or]: [{ username }, { email }],
@@ -38,12 +46,13 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(pass, 10);
 
     try {
-      const user = await this.userModel.create({
+      const user  = await this.userModel.create({
         username,
         email,
         password: hashedPassword,
       });
 
+<<<<<<< HEAD
       const payload = { username: user.username, sub: user.id };
       const accessToken = await this.jwtService.signAsync(payload, 
         {
@@ -57,12 +66,18 @@ export class AuthService {
         user: user
 
       };
+=======
+      const payload: JwtPayload = { username: user.username, sub: user.id };
+      const accessToken = await this.jwtService.signAsync(payload);
+
+      return { message: 'User created successfully', accessToken };
+>>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
     } catch (error) {
-      console.error('Error during user creation:', error);
       throw new BadRequestException('Failed to create a user');
     }
   }
 
+<<<<<<< HEAD
   async login(email: string, pass: string): Promise<{ accessToken: string, user: User }> {
     try {
       const user = await this.userModel.findOne({ where: { email } });
@@ -116,4 +131,23 @@ export class AuthService {
     return `Authentication=; HttpOnly; Path=/; Max-Age=0`;
   }
 
+=======
+  async signIn(email: string, pass: string): Promise<{ accessToken: string }> {
+    const user = await this.userModel.findOne({ where: { email } });
+    if (!user) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+    const isMatch = await bcrypt.compare(pass, user.password);
+
+    if (!isMatch) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+    const payload: JwtPayload = { username: user.username, sub: user.id };
+    return {
+      accessToken: await this.jwtService.signAsync(payload),
+    };
+  }
+
+ 
+>>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
 }

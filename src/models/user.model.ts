@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
   Column,
   DataType,
@@ -6,22 +7,26 @@ import {
   Table,
 } from 'sequelize-typescript';
 import { Todo } from './todo.model';
+=======
+import { Column, DataType, Model, Table } from "sequelize-typescript";
+>>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
 
 @Table
-export class User extends Model<User> {
-  @Column({
-    type: DataType.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
-  })
-  id: number;
+export class User extends Model<User>{
+    
+    @Column({
+        type: DataType.STRING,
+        allowNull: false,
+    })
+    username: string;
 
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  username: string;
+    @Column({
+        type: DataType.STRING,
+        allowNull: false,
+    })
+    email: string;
 
+<<<<<<< HEAD
   @Column({
     type: DataType.STRING,
     allowNull: false,
@@ -85,4 +90,11 @@ export class User extends Model<User> {
 
   @HasMany(() => Todo)
   todos: Todo[];
+=======
+    @Column({
+        type:DataType.STRING,
+        allowNull: false,
+    })
+    password: string;
+>>>>>>> parent of f7e29f6 (authentication changed to passport and guards added)
 }
